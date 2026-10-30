@@ -1,68 +1,70 @@
 ﻿// ==========================================
-// 1. If-Else Statements (කොන්ඩිෂන්ස්)
+// 1. Defining a Class (කෝඩ් එකේ පන්තියක් නිර්මාණය කිරීම)
 // ==========================================
 
-int score = 85;
-
-if (score >= 75)
+class Developer
 {
-    Console.WriteLine("Grade: Distinction (A)");
+    // Properties (Java වල private variables + getters/setters වලට වඩා C# වල කෙටියෙන් Auto-properties පාවිච්චි කරන්න පුළුවන්)
+    public string Name { get; set; }
+    public string PrimaryStack { get; set; }
+    public int ExperienceYears { get; set; }
+
+    // Constructor (অবject එකක් හදනකොට ස්වයංක්‍රීයව කෝල් වෙන ක්‍රමවේදය - Java වල වගේමයි)
+    public Developer(string name, string primaryStack, int experienceYears)
+    {
+        Name = name;
+        PrimaryStack = primaryStack;
+        ExperienceYears = experienceYears;
+    }
+
+    // Method (පන්තියට අයිති හැසිරීමක් / Function එකක්)
+    public void Introduce()
+    {
+        Console.WriteLine($"Hi, I'm {Name}. I work with {PrimaryStack} and have {ExperienceYears} years of experience.");
+    }
 }
-else if (score >= 65)
-{
-    Console.WriteLine("Grade: Credit (B)");
-}
-else
-{
-    Console.WriteLine("Grade: Pass/Fail");
-}
-
-
-// ==========================================
-// 2. Switch Statement / Switch Expressions
-// ==========================================
-
-string role = "Developer";
-
-// නවීන C# වල switch එක ගොඩක් පවර්ෆුල් (Pattern Matching සමඟ)
-string department = role switch
-{
-    "Developer" => "Engineering Department",
-    "Designer" => "UI/UX Department",
-    _ => "General Staff" // '_' කියන්නේ JS වල 'default' වගේ එකක්
-};
-
-Console.WriteLine($"Role: {role} -> {department}");
 
 
 // ==========================================
-// 3. Loops (for, foreach, while)
+// 2. Creating Objects and Using the Class
 // ==========================================
 
-// --- For Loop ---
-Console.WriteLine("\n--- For Loop Counting ---");
-for (int i = 1; i <= 3; i++)
+// ප්‍රධාන Main වැඩසටහන ඇතුළේ Developer ඔબ્જેક્ટස් (Objects) හදන හැටි:
+
+// Object 1
+Developer dev1 = new Developer("Kavishka", "MERN Stack", 2);
+dev1.Introduce(); // Method එක කෝල් කිරීම
+
+// Object 2
+Developer dev2 = new Developer("Alex", "C# / .NET", 4);
+dev2.Introduce();
+
+
+// ==========================================
+// 3. Inheritance (පරම්පරාගත භාවය - OOP Core Concept)
+// ==========================================
+
+// Base class එකෙන් තවත් Class එකක් extend කරගැනීම (Java වල 'extends' වගේ C# වල ':' ලකුණ පාවිච්චි කරනවා)
+class FullStackDeveloper : Developer
 {
-    Console.WriteLine($"Count: {i}");
+    public bool CanBuildDesktopApps { get; set; }
+
+    // Constructor chaining (base කීවොත් මව් කෝඩ් එකේ constructor එකට ඩේටා යවනවා)
+    public FullStackDeveloper(string name, string primaryStack, int experienceYears, bool canBuildDesktopApps) 
+        : base(name, primaryStack, experienceYears)
+    {
+        CanBuildDesktopApps = canBuildDesktopApps;
+    }
+
+    // අලුත් Method එකක්
+    public void CheckDesktopSkills()
+    {
+        string status = CanBuildDesktopApps ? "Yes, I can!" : "Not yet.";
+        Console.WriteLine($"-> Can build desktop apps with .NET? {status}\n");
+    }
 }
 
-
-// --- Foreach Loop (JavaScript වල for...of වගේ, මාරම වැදගත්!) ---
-// C# වල Arrays හෝ Lists හරහා යන්න 'foreach' ගොඩක් පාවිච්චි කරනවා.
-Console.WriteLine("\n--- Tech Stack List (foreach) ---");
-string[] techStack = { "JavaScript", "React", "Node.js", "C# / .NET" };
-
-foreach (var tech in techStack)
-{
-    Console.WriteLine($"Learning/Using: {tech}");
-}
-
-
-// --- While Loop ---
-Console.WriteLine("\n--- While Loop Countdown ---");
-int countdown = 2;
-while (countdown > 0)
-{
-    Console.WriteLine($"Countdown: {countdown}");
-    countdown--;
-}
+// FullStackDeveloper ඔબ્જેક્ટ එකක් හදා පරීක්ෂා කිරීම:
+FullStackDeveloper myDev = new FullStackDeveloper("Kavishka", "MERN & .NET", 2, true);
+myDev.Introduce();
+myDev.CheckDesktopSkills();
