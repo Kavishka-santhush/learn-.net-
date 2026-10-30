@@ -1,50 +1,68 @@
 ﻿// ==========================================
-// 1. Basic Data Types (ප්‍රධාන ඩාටා ටයිප්ස්)
+// 1. If-Else Statements (කොන්ඩිෂන්ස්)
 // ==========================================
 
-// Java වල වගේම C# වලත් Data Types explicit ලෙස කියන්න පුළුවන්
-int age = 25;                       // Whole numbers (පූර්ණ සංඛ්‍යා)
-double height = 5.9;                // Decimal numbers (දශම සංඛ්‍යා)
-char grade = 'A';                   // Single character
-string name = "Kavishka";           // Text / String
-bool isDeveloper = true;            // Boolean (true/false)
+int score = 85;
 
-// C# වල මූලික Console Output
-Console.WriteLine($"Name: {name}, Age: {age}, Height: {height}ft");
-
-
-// ==========================================
-// 2. Type Inference with 'var'
-// ==========================================
-
-// JavaScript වල 'let' / 'const' වගේ C# වල 'var' පාවිච්චි කරන්න පුළුවන්.
-// හැබැයි වෙනස: C# වල 'var' කියන්නේ තවමත් Static Type එකක්! 
-// ඒ කියන්නේ එක් වරක් Assign කළ පසු Data Type එක වෙනස් කරන්න බැහැ.
-
-var city = "Colombo";  // C# විසින් ස්වයංක්‍රීයව මෙය string ලෙස හඳුනා ගනී
-var count = 100;       // integer ලෙස හඳුනා ගනී
-
-// city = 123; // ❌ ERROR: JS වල වගේ වෙනස් කරන්න බැහැ! (Type safety)
+if (score >= 75)
+{
+    Console.WriteLine("Grade: Distinction (A)");
+}
+else if (score >= 65)
+{
+    Console.WriteLine("Grade: Credit (B)");
+}
+else
+{
+    Console.WriteLine("Grade: Pass/Fail");
+}
 
 
 // ==========================================
-// 3. Null Safety & Nullable Types
+// 2. Switch Statement / Switch Expressions
 // ==========================================
 
-// C# වල සාමාන්‍ය Value Types (int, double, bool) වලට 'null' දාන්න බැහැ.
-// 'null' දාන්න ඕනේ නම් Data Type එක අගට '?' ලකුණ යොදන්න ඕනේ.
+string role = "Developer";
 
-int? nullableAge = null; // ✅ Nullable integer
-string? nullableName = null; // ✅ Nullable string
+// නවීන C# වල switch එක ගොඩක් පවර්ෆුල් (Pattern Matching සමඟ)
+string department = role switch
+{
+    "Developer" => "Engineering Department",
+    "Designer" => "UI/UX Department",
+    _ => "General Staff" // '_' කියන්නේ JS වල 'default' වගේ එකක්
+};
 
-Console.WriteLine($"Nullable Age: {nullableAge ?? 0}"); // '??' කියන්නේ Null Coalescing Operator එක (JS වල Nullish coalescing වගේමයි)
+Console.WriteLine($"Role: {role} -> {department}");
 
 
 // ==========================================
-// 4. User Input (ටර්මිනල් එකෙන් Input එකක් ලබා ගැනීම)
+// 3. Loops (for, foreach, while)
 // ==========================================
 
-Console.Write("\nEnter your favorite programming language: ");
-string? inputLanguage = Console.ReadLine(); // User input එකක් string එකක් විදිහට ගන්නවා
+// --- For Loop ---
+Console.WriteLine("\n--- For Loop Counting ---");
+for (int i = 1; i <= 3; i++)
+{
+    Console.WriteLine($"Count: {i}");
+}
 
-Console.WriteLine($"Awesome! You love {inputLanguage}.");
+
+// --- Foreach Loop (JavaScript වල for...of වගේ, මාරම වැදගත්!) ---
+// C# වල Arrays හෝ Lists හරහා යන්න 'foreach' ගොඩක් පාවිච්චි කරනවා.
+Console.WriteLine("\n--- Tech Stack List (foreach) ---");
+string[] techStack = { "JavaScript", "React", "Node.js", "C# / .NET" };
+
+foreach (var tech in techStack)
+{
+    Console.WriteLine($"Learning/Using: {tech}");
+}
+
+
+// --- While Loop ---
+Console.WriteLine("\n--- While Loop Countdown ---");
+int countdown = 2;
+while (countdown > 0)
+{
+    Console.WriteLine($"Countdown: {countdown}");
+    countdown--;
+}
