@@ -1,7 +1,6 @@
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
@@ -14,28 +13,44 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
+// ==========================================
+// අපේ In-Memory Data List එක (Temporary Database)
+// ==========================================
+var developers = new List<string>
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+    "Kavishka (MERN / .NET)",
+    "Alex (Backend Dev)",
+    "Sarah (Fullstack)"
 };
 
-app.MapGet("/weatherforecast", () =>
+
+// ==========================================
+// 1. GET Request: /api/developers
+// Express වල app.get('/api/developers', (req, res) => ...) වගේමයි!
+// ==========================================
+app.MapGet("/api/developers", () =>
 {
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+    return Results.Ok(developers);
+});
+
+
+// ==========================================
+// 2. POST Request: /api/developers
+// Express වල app.post('/api/developers', (req, res) => ...) වගේමයි!
+// ==========================================
+app.MapPost("/api/developers", (DeveloperRequest request) =>
+{
+    if (string.IsNullOrWhiteSpace(request.Name))
+    {
+        return Results.BadRequest(new { Message = "Developer name cannot be empty!" });
+    }
+
+    developers.Add(request.Name);
+    return Results.Ok(new { Message = "Developer added successfully!", Data = developers });
+});
+
 
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+// Request body එකෙන් එන JSON එක map කරගන්න record එකක්
+record DeveloperRequest(string Name);
