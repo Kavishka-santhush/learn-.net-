@@ -1,4 +1,43 @@
 ﻿// ==========================================
+// 1. Lists (Dynamic Arrays - JS වල Arrays වලට සමානයි)
+// ==========================================
+
+// C# වල Fixed Arrays වෙනුවට ඩයිනමික් ලෙස ඩේටා එකතු කරන්න/මකන්න List පාවිච්චි කරනවා.
+List<string> languages = new List<string> { "JavaScript", "Java", "PHP" };
+
+// අලුත් අයිතමයක් එකතු කිරීම (JS වල push() වගේ)
+languages.Add("C#");
+
+Console.WriteLine("--- All Languages ---");
+foreach (var lang in languages)
+{
+    Console.WriteLine($"- {lang}");
+}
+
+
+// ==========================================
+// 2. LINQ Basics (Language Integrated Query)
+// ==========================================
+// MERN වල JavaScript වල .filter() හෝ .map() පාවිච්චි කරනවා වගේ, 
+// C# වල ඩාටා කලෙක්ෂන්ස් ෆිල්ටර් කරන්න, සෝට් කරන්න LINQ පාවිච්චි කරනවා.
+
+List<int> numbers = new List<int> { 5, 12, 8, 20, 3, 15 };
+
+// උදාහරණයක් ලෙස: 10 ට වඩා වැඩි සංඛ්‍යා පමණක් ෆිල්ටර් කරගැනීම (JavaScript වල .filter() වගේමයි!)
+var filteredNumbers = numbers.Where(n => n > 10).ToList();
+
+Console.WriteLine("\n--- Numbers greater than 10 (using LINQ) ---");
+foreach (var num in filteredNumbers)
+{
+    Console.WriteLine(num);
+}
+
+
+
+
+
+
+// ==========================================
 // 1. Objects හදන සහ කෝල් කරන කොටස (උඩින්ම තියෙන්න ඕනේ)
 // ==========================================
 
