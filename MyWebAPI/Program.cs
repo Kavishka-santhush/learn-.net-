@@ -48,6 +48,43 @@ app.MapPost("/api/developers", async (DeveloperRequest request, AppDbContext db)
     return Results.Ok(new { Message = "Developer saved to Database successfully!", Data = newDev });
 });
 
+
+// ==========================================
+// 3. GET Request (ID එක අනුව නිශ්චිත Developer කෙනෙක් ලබා ගැනීම)
+// Express වල app.get('/api/developers/:id', ...) වගේමයි!
+// ==========================================
+app.MapGet("/api/developers/{id}", async (int id, AppDbContext db) =>
+{
+    var dev = await db.Developers.FindAsync(id);
+
+    if (dev is null)
+    {
+        return Results.NotFound(new { Message = $"Developer with ID {id} not found!" });
+    }
+
+    return Results.Ok(dev);
+});
+
+
+// ==========================================
+// 4. DELETE Request (ID එක අනුව Developer කෙනෙක් ඩාටාබේස් එකෙන් ඉවත් කිරීම)
+// Express වල app.delete('/api/developers/:id', ...) වගේමයි!
+// ==========================================
+app.MapDelete("/api/developers/{id}", async (int id, AppDbContext db) =>
+{
+    var dev = await db.Developers.FindAsync(id);
+
+    if (dev is null)
+    {
+        return Results.NotFound(new { Message = $"Developer with ID {id} not found!" });
+    }
+
+    db.Developers.Remove(dev);
+    await db.SaveChangesAsync(); // ඩාටාබේස් එකෙන් මකා දැමීම
+
+    return Results.Ok(new { Message = $"Developer with ID {id} deleted successfully!" });
+});
+
 app.Run();
 
 // Request Body එකට අදාළ record එක
